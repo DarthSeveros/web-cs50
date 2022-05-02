@@ -1,0 +1,25 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{page}}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ page }}</h1>
+    {% if error %}
+        <h2>Error page already exists</h2>
+    {% endif %}
+
+    {% if newpage %}
+    <form action="{% url 'newpage' %}" method="post">
+    {% else %}
+    <form action="/editpage/{{ pagetitle }}" method="post">
+    {% endif %}
+        {% csrf_token %}
+        <input type="text" name="pagetitle" placeholder="Page title" value="{{ pagetitle }}">
+        <hr>
+        <textarea name="newpagecontent" id="newpagecontent" cols="30" rows="10">{{ pagecontent }}</textarea>
+        <hr>
+        <input type="submit" value="Save">
+    </form>
+{% endblock %}
